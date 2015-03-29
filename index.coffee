@@ -18,9 +18,20 @@ name_or_me = (testname, msg) ->
     name = testname
   name
 
-client
+userBalance = (user) ->
+  "#{user.username}(#{user.balance})"
 
 module.exports = (robot) ->
+  robot.respond /(wie)(.*)(moet|zal|gaat)(.*)(eten)(.*)/, (msg) ->
+    msg.send "Even zien..."
+    client.balances (error, users) ->
+      if error?
+        msg.send "Niemand, we zullen honger hebben"
+      else
+        cheap_guy = userBalance(users.shift())
+        others = ("#{userBalance(user)}" for user in users).join(", ")
+        msg.send("ik denk #{cheap_guy}, anders: #{others}")
+
   # This will be matched for now: http://rubular.com/r/ejZk2fxM0s
   robot.respond /(.*)(betaalde|heb|heeft)(.*)(\d(.|,)\d)(.*)(voor)(.*)/i, (msg) ->
     payer_name = name_or_me(normalizeName(msg.match[1]), msg)

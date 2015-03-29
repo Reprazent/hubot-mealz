@@ -12,10 +12,22 @@ module.exports = class MealzClient
         callback(error, meal)
 
   balances: (callback) ->
-    @get "balance"
+    @get "users", (error, response, body) ->
+      if error? || response.statusCode != 200
+        error = body unless error
+        callback(error, response)
+      else
+        users = JSON.parse(body)
+        callback(error, users)
+
 
   post: (path, params, callback) ->
     jsonBody = JSON.stringify params
     @client.scope path, (cli) ->
       cli.post(jsonBody) (error, response, body) ->
+        callback(error, response, body)
+
+  get: (path, callback) ->
+    @client.scope path, (cli) ->
+      cli.get() (error, response, body) ->
         callback(error, response, body)
