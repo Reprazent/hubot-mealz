@@ -18,8 +18,12 @@ name_or_me = (testname, msg) ->
     name = testname
   name
 
+formatBalance = (balance) ->
+  balance = +(balance || 0)
+  balance.toFixed(2)
+
 userBalance = (user) ->
-  "#{user.username}(#{user.balance})"
+  "#{user.username} (#{formatBalance(user.balance)})"
 
 module.exports = (robot) ->
   robot.respond /(wie)(.*)(moet|zal|gaat)(.*)(eten)(.*)/, (msg) ->
