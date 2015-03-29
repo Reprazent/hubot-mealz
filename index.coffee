@@ -27,7 +27,7 @@ module.exports = (robot) ->
     amount = msg.match[4]
     eaters = normalizeUsernames(msg.match[8])
     client.add_meal amount, payer_name, eaters, (error, meal) ->
-      if error
+      if error?
         msg.send "Maaltijd niet gelogd :-(: #{error}"
       else
         msg.send "Meal ##{meal.id} payed. New balance for #{meal.payed_by.username} is #{meal.payed_by.balance}"
