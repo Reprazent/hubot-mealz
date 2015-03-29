@@ -32,11 +32,11 @@ module.exports = (robot) ->
         others = ("#{userBalance(user)}" for user in users).join(", ")
         msg.send("ik denk #{cheap_guy}, anders: #{others}")
 
-  # This will be matched for now: http://rubular.com/r/ejZk2fxM0s
-  robot.respond /(.*)(betaalde|heb|heeft)(.*)(\d(.|,)\d)(.*)(voor)(.*)/i, (msg) ->
+  # This will be matched for now: http://rubular.com/r/1TNr1HduBc
+  robot.respond /(.*)(betaalde|heb|heeft)(\s)(\d+\D\d+)(.*)(voor)(.*)/i, (msg) ->
     payer_name = name_or_me(normalizeName(msg.match[1]), msg)
     amount = msg.match[4]
-    eaters = normalizeUsernames(msg.match[8])
+    eaters = normalizeUsernames(msg.match[7])
     client.add_meal amount, payer_name, eaters, (error, meal) ->
       if error?
         msg.send "Maaltijd niet gelogd :-(: #{error}"
