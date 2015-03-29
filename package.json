@@ -11,7 +11,8 @@
         "mealz"
     ],
     "dependencies": {
-        "coffee-script": "~1.6"
+        "coffee-script": "~1.6",
+        "scoped-http-client": "~0.10.3"
     },
     "devDependencies": {
         "hubot": "^2.7.5",

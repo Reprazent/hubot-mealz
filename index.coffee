@@ -1,16 +1,14 @@
-# MealzClient = require "mealz_client"
+MealzClient = require "./mealz_client"
+HttpClient = require 'scoped-http-client'
 
-# client = new MealzClient("")
-#
-#
+client = new MealzClient(process.env.HUBOT_MEALZ_URL, HttpClient)
 
 normalizeName = (name) ->
-  name.replace("@", "").toLowerCase()
+  name.replace("@", "").toLowerCase().replace /^\s+|\s+$/g, ""
 
 normalizeUsernames = (nameSentence) ->
   nameSentence = nameSentence.replace /^\s+|\s+$/g, ""
   normalizedNames = nameSentence.replace(",", " ").replace(" en ", " ")
-  console.log normalizedNames
   (normalizeName(name) for name in normalizedNames.split(" "))
 
 name_or_me = (testname, msg) ->
@@ -20,9 +18,16 @@ name_or_me = (testname, msg) ->
     name = testname
   name
 
+client
+
 module.exports = (robot) ->
   # This will be matched for now: http://rubular.com/r/ejZk2fxM0s
   robot.respond /(.*)(betaalde|heb|heeft)(.*)(\d(.|,)\d)(.*)(voor)(.*)/i, (msg) ->
-    payer_name = name_or_me normalizeName(msg.match[1]), msg
+    payer_name = name_or_me(normalizeName(msg.match[1]), msg)
     amount = msg.match[4]
-    eaters = normalizeUsernames(msg.match[8]).length
+    eaters = normalizeUsernames(msg.match[8])
+    client.add_meal amount, payer_name, eaters, (error, meal) ->
+      if error
+        msg.send "Maaltijd niet gelogd :-(: #{error}"
+      else
+        msg.send "Meal ##{meal.id} payed. New balance for #{meal.payed_by.username} is #{meal.payed_by.balance}"
