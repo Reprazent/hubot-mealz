@@ -1,6 +1,6 @@
 {
     "name": "hubot-mealz",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "package to talk to https://github.com/Reprazent/mealz",
     "main": "index.coffee",
     "keywords": [
