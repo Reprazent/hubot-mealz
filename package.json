@@ -3,23 +3,26 @@
     "version": "1.0.0",
     "description": "package to talk to https://github.com/Reprazent/mealz",
     "main": "index.coffee",
-    "scripts": {
-        "test": "mocha --compilers coffee:coffee-script test/*.coffee"
-    },
     "keywords": [
         "hubot",
         "mealz"
     ],
+    "bugs": {
+      "url": "https://github.com/Reprazent/hubot-meals/issues"
+    },
     "dependencies": {
         "coffee-script": "~1.6",
         "scoped-http-client": "~0.10.3"
     },
     "devDependencies": {
         "hubot": "^2.7.5",
-        "hubot-mock-adapter": "^1.0.0",
-        "mocha": "1.20.1",
-        "chai": "^1.9.1"
+        "hubot-mock-adapter": "^1.0.0"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git://github.com/reprazent/hubot-mealz.git"
     },
     "author": "Bob Van Landuyt",
+    "homepage": "https://github.com/reprazent/hubot-mealz",
     "license": "MIT"
 }
