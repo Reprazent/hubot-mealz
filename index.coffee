@@ -46,7 +46,7 @@ module.exports = (robot) ->
         msg.send("Als #{cheap_guy} er niet is, dan kunnen dezen nog: #{others}")
 
   # This will be matched for now: http://rubular.com/r/1TNr1HduBc
-  robot.respond /(.*)(betaalde|heb|heeft)(\s)(\d+\D\d+)(.*)(voor)(.*)/i, (msg) ->
+  robot.respond /(.*)(betaalde|heb|heeft)(\s)(\d+\D\d*)(.*)(voor)(.*)/i, (msg) ->
     payer_name = name_or_me(normalizeName(msg.match[1]), msg)
     amount = msg.match[4]
     eaters = normalizeUsernames(msg.match[7])
