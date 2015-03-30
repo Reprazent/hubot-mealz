@@ -35,7 +35,6 @@ module.exports = (robot) ->
         cheap_guy = userBalance(users.shift())
         msg.send("ik denk #{cheap_guy}")
 
-module.exports = (robot) ->
   robot.respond /(en anders)(.*)/, (msg) ->
     msg.send "Even zien..."
     client.balances (error, users) ->
