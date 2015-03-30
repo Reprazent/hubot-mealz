@@ -33,8 +33,7 @@ module.exports = (robot) ->
         msg.send "Niemand, we zullen honger hebben"
       else
         cheap_guy = userBalance(users.shift())
-        # others = ("#{userBalance(user)}" for user in users).join(", ")
-        msg.send("ik denk #{cheap_guy}") #, anders: #{others}")
+        msg.send("ik denk #{cheap_guy}")
 
 module.exports = (robot) ->
   robot.respond /(en anders)(.*)/, (msg) ->
