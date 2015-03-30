@@ -33,8 +33,19 @@ module.exports = (robot) ->
         msg.send "Niemand, we zullen honger hebben"
       else
         cheap_guy = userBalance(users.shift())
+        # others = ("#{userBalance(user)}" for user in users).join(", ")
+        msg.send("ik denk #{cheap_guy}") #, anders: #{others}")
+
+module.exports = (robot) ->
+  robot.respond /(en anders)(.*)/, (msg) ->
+    msg.send "Even zien..."
+    client.balances (error, users) ->
+      if error?
+        msg.send "Niemand, we zullen honger hebben"
+      else
+        cheap_guy = userBalance(users.shift())
         others = ("#{userBalance(user)}" for user in users).join(", ")
-        msg.send("ik denk #{cheap_guy}, anders: #{others}")
+        msg.send("Als #{cheap_guy} er niet is, dan kunnen dezen nog: #{others}")
 
   # This will be matched for now: http://rubular.com/r/1TNr1HduBc
   robot.respond /(.*)(betaalde|heb|heeft)(\s)(\d+\D\d+)(.*)(voor)(.*)/i, (msg) ->
