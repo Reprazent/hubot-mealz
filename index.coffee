@@ -4,12 +4,12 @@ HttpClient = require 'scoped-http-client'
 client = new MealzClient(process.env.HUBOT_MEALZ_URL, HttpClient)
 
 normalizeName = (name) ->
-  name.replace("@", "").toLowerCase().replace /^\s+|\s+$/g, ""
+  name.toLowerCase().replace /[^a-z]/g, ""
 
 normalizeUsernames = (nameSentence) ->
   nameSentence = nameSentence.replace /^\s+|\s+$/g, ""
   normalizedNames = nameSentence.replace(",", " ").replace(" en ", " ")
-  (normalizeName(name) for name in normalizedNames.split(" "))
+  (normalizeName(name) for name in normalizedNames.split(" ") when name.length > 0)
 
 name_or_me = (testname, msg) ->
   if !testname? ||  testname == "" || /^(?:ik|)$/i.test(testname)
