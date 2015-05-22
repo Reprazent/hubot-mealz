@@ -54,7 +54,7 @@ module.exports = (robot) ->
       else
         msg.send "Meal ##{meal.id} payed. New balance for #{meal.payed_by.username} is #{meal.payed_by.balance}"
 
-  robot.respond /don't mention (.*)/, (msg) ->
+  robot.respond /stop mentioning (.*)/, (msg) ->
     to_ignore_name = name_or_me(normalizeName(msg.match[1]), msg)
     names = robot.brain.get(MEALZ_IGNORE_NAMES) || []
     names.push to_ignore_name unless (names.indexOf(to_ignore_name) > -1)
