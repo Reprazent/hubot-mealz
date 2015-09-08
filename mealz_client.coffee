@@ -20,6 +20,11 @@ module.exports = class MealzClient
         users = JSON.parse(body)
         callback(error, users)
 
+  archive: (username, callback) ->
+    @delete "users/#{username}", (error, response, body) ->
+      if error? || response.statusCode > 299 || response.statusCode < 200
+        error = body unless error
+      callback(error, response)
 
   post: (path, params, callback) ->
     jsonBody = JSON.stringify params
@@ -30,4 +35,9 @@ module.exports = class MealzClient
   get: (path, callback) ->
     @client.scope path, (cli) ->
       cli.get() (error, response, body) ->
+        callback(error, response, body)
+
+  delete: (path, callback) ->
+    @client.scope path, (cli) ->
+      cli.del() (error, response, body) ->
         callback(error, response, body)

@@ -4,7 +4,6 @@ HttpClient = require 'scoped-http-client'
 client = new MealzClient(process.env.HUBOT_MEALZ_URL, HttpClient)
 MEALZ_IGNORE_NAMES = "MEALZ_IGNORE_NAMES_BOB!"
 
-
 normalizeName = (name) ->
   name.toLowerCase().replace /[^a-z]/g, ""
 
@@ -69,6 +68,14 @@ module.exports = (robot) ->
     robot.brain.set(MEALZ_IGNORE_NAMES, names)
     msg.send "OK, I will mention #{to_mention_name} again"
 
+  robot.respond /(.*)eet niet meer mee/, (msg) ->
+    msg.send "Spijtig..."
+    name = normalizeName(msg.match[1])
+    client.archive name, (error) ->
+      if error?
+        msg.send "Hmm, I don't know this #{name}"
+      else
+        msg.send "Bye bye, #{name}"
 
 `
 function flipString(aString) {
