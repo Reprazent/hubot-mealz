@@ -1,7 +1,7 @@
 MealzClient = require "./mealz_client"
 HttpClient = require 'scoped-http-client'
 
-client = new MealzClient(process.env.HUBOT_MEALZ_URL, HttpClient)
+client = new MealzClient("https://localhost:3000/api/", HttpClient)
 MEALZ_IGNORE_NAMES = "MEALZ_IGNORE_NAMES_BOB!"
 
 normalizeName = (name) ->
@@ -76,6 +76,20 @@ module.exports = (robot) ->
         msg.send "Hmm, I don't know this #{name}"
       else
         msg.send "Bye bye, #{name}"
+
+  robot.respond /verwijder meal (.*)/i, (msg) ->
+    meal_id = msg.match[1]
+    msg.send "Deleting #{meal_id} as we speak"
+    client.remove_meal meal_id, (error, users) ->
+      if error?
+        msg.send "#{error}"
+      else
+        msg.send "Meal, deleted."
+        to_ignore_names = robot.brain.get(MEALZ_IGNORE_NAMES) || []
+        cheap_guy = userBalance(users.shift(), to_ignore_names)
+        others = ("#{userBalance(user, to_ignore_names)}" for user in users).join(", ")
+
+        msg.send("ik denk #{cheap_guy}, anders: #{others}")
 
 `
 function flipString(aString) {
