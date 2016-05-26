@@ -1,7 +1,7 @@
 MealzClient = require "./mealz_client"
 HttpClient = require 'scoped-http-client'
 
-client = new MealzClient("https://localhost:3000/api/", HttpClient)
+client = new MealzClient(process.env.HUBOT_MEALZ_URL, HttpClient)
 MEALZ_IGNORE_NAMES = "MEALZ_IGNORE_NAMES_BOB!"
 
 normalizeName = (name) ->
