@@ -77,6 +77,21 @@ module.exports = (robot) ->
       else
         msg.send "Bye bye, #{name}"
 
+  robot.respond /verwijder meal (.*)/i, (msg) ->
+    meal_id = msg.match[1]
+    msg.send "Deleting #{meal_id}."
+    msg.send "https://media1.giphy.com/media/C87IXdLfJ44Zq/200.gif"
+    client.remove_meal meal_id, (error, users) ->
+      if error?
+        msg.send "#{error}"
+      else
+        msg.send "Meal deleted, new balance:"
+        to_ignore_names = robot.brain.get(MEALZ_IGNORE_NAMES) || []
+        cheap_guy = userBalance(users.shift(), to_ignore_names)
+        others = ("#{userBalance(user, to_ignore_names)}" for user in users).join(", ")
+
+        msg.send("#{cheap_guy}, #{others}")
+
 `
 function flipString(aString) {
  var last = aString.length - 1;

@@ -11,6 +11,15 @@ module.exports = class MealzClient
         meal = JSON.parse(body).meal
         callback(error, meal)
 
+  remove_meal: (meal_id, callback) ->
+    @delete "meals/#{meal_id}", (error, response, body) ->
+      if error? || response.statusCode > 299 || response.statusCode < 200
+        error = JSON.parse(body).error unless error
+        callback(error, response)
+      else
+        users = JSON.parse(body)
+        callback(error, users)
+
   balances: (callback) ->
     @get "users", (error, response, body) ->
       if error? || response.statusCode != 200
