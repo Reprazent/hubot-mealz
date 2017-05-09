@@ -30,7 +30,7 @@ userBalance = (user, to_ignore_names) ->
   "#{username} (#{formatBalance(user.balance)})"
 
 module.exports = (robot) ->
-  robot.respond /(wie)(.*)(moet|zal|gaat)(.*)(eten)(.*)/, (msg) ->
+  robot.respond /(wie)(.*)(moet|zal|gaat)(.*)(eten)(.*)/i, (msg) ->
     msg.send "Even zien..."
     client.balances (error, users) ->
       if error?
